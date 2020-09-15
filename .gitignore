@@ -1,0 +1,8 @@
+*.pyc
+*.DS_Store
+.hypothesis/
+.ropeproject/
+.vim/
+
+# profiling results
+*.cprof
