@@ -18,8 +18,12 @@ def tree1():
 
 def test_solution(tree1):
     v = 2
-    pudb.set_trace()
+    # pudb.set_trace()
     t1, t2 = Solution().splitBST(tree1, v)
+    assert t1.val == 2
+    assert t2.val == 4
 
+    v = 7
+    t1, t2 = Solution().splitBST(tree1, v)
     assert t1.val == 4
-    assert t2.val == 2
+    assert t2 == None
