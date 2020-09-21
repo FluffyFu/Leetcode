@@ -30,6 +30,9 @@ class Solution:
         """
         Internal function to build a graph from the given list. If two words only differs by one letter,
         there is a edge between them.
+
+        This function takes O(n**2), which exceeds the time limit. Maybe most of the graph is not used because
+        they are not connected with the start word.
         """
         if not begin_word in word_list:
             word_list.append(begin_word)
@@ -55,3 +58,33 @@ class Solution:
                 return False
 
         return True if n == 1 else False
+
+
+class Solution_2:
+    """
+    Instead of building the graph first (O(n**2) time), we check the valid neighbors along the bfs,
+    this ways the time complexity is word_len * 26 * n, which is O(n).
+    """
+    LETTERES = 'abcdefghijklmnopqrstuvwxyz'
+
+    def ladder_length(self, begin_word, end_word, word_list):
+        if not end_word in word_list:
+            return 0
+
+        word_set = set(word_list)
+        word_len = len(begin_word)
+
+        q = Queue()
+        q.put((begin_word, 1))
+
+        while not q.empty():
+            v, dist = q.get()
+            for i in range(word_len):
+                for c in self.LETTERES:
+                    candidate = v[:i] + c + v[i+1:]
+                    if candidate == end_word:
+                        return dist + 1
+                    if candidate in word_set:
+                        q.put((candidate, dist+1))
+                        word_set.remove(candidate)
+        return 0
