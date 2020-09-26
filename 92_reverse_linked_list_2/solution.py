@@ -15,21 +15,20 @@ class Solution:
         pre = dummy
         cur = head
 
-        while m > 1:
+        for _ in range(m-1):
             pre = cur
             cur = cur.next
-            m -= 1
-            n -= 1
 
         cur_temp = cur
         pre_temp = None
 
-        while n > 0:
+        for _ in range(n - m + 1):
+            # the reverse operation takes (m -n) + 1 times.
+            # when m == n, the operation does not change the original linked list.
             temp = cur_temp.next
             cur_temp.next = pre_temp
             pre_temp = cur_temp
             cur_temp = temp
-            n -= 1
 
         pre.next = pre_temp
         cur.next = cur_temp
