@@ -8,24 +8,25 @@ class Solution:
         """
         if not nums:
             return
+        i = len(nums) - 1
+        while i > 0:
+            if nums[i-1] < nums[i]:
+                break
+            i -= 1
 
-        for right in range(len(nums)-1, 0, -1):
-            for left in range(right - 1, -1, -1):
-                if nums[left] < nums[right]:
-                    self._shift_array(nums, left, right)
-                    return
+        if i == 0:
+            self._reverse_list(nums, 0, len(nums)-1)
+        else:
+            for j in range(len(nums) - 1, i-1, -1):
+                if nums[i-1] < nums[j]:
+                    nums[i-1], nums[j] = nums[j], nums[i-1]
+                    break
+            self._reverse_list(nums, i, len(nums) - 1)
 
-        left = 0
-        right = len(nums) - 1
-        while left < right:
+    def _reverse_list(self, nums, left, right):
+
+        while left <= right:
             nums[left], nums[right] = nums[right], nums[left]
             left += 1
             right -= 1
-
-    def _shift_array(self, nums, left: int, right: int) -> None:
-        temp = nums[right]
-        for cur in range(right-1, left-1, -1):
-            nums[cur+1] = nums[cur]
-
-        nums[left] = temp
 
