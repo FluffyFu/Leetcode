@@ -37,3 +37,25 @@ class Solution:
             max_sum = max(max_sum, pre)
 
         return max_sum
+
+    def max_sub_array_clean(self, nums):
+        if not nums:
+            return 0
+        pre = 0  # optimal sum up to current number (inclusive)
+        opt = -float('inf')  # optimal sum over all
+
+        for num in nums:
+            pre = max(num + pre, num)
+            opt = max(opt, pre)
+
+        return opt
+
+
+"""
+[-2, 1, -3, 4]
+
+num = -2, pre = -2, opt = -2
+num = 1, pre = 1, opt = 1
+num = -3, pre = -2, opt = 1
+nums = 4, pre = 2, opt = 2
+"""
