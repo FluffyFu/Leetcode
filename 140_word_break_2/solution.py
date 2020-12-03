@@ -11,19 +11,18 @@ class Solution:
         word_dict = set(word_dict)
         res = []
         record = []
-        cache = {}
-        self._back_tracking(s, 0, word_dict, res, record, cache)
+        self._back_tracking(s, 0, word_dict, res, record)
 
         return res
 
-    def _back_tracking(self, s, start, word_dict, res, record, cache):
+    def _back_tracking(self, s, start, word_dict, res, record):
         if start == len(s):
             res.append(" ".join(record))
             return
         for i in range(start+1, len(s)+1):
             if s[start:i] in word_dict:
                 record.append(s[start:i])
-                self._back_tracking(s, i, word_dict, res, record, cache)
+                self._back_tracking(s, i, word_dict, res, record)
                 record.pop()
 
 
