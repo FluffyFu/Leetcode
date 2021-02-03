@@ -10,10 +10,11 @@ def helper(s):
     stack = []
     cur = 0
     # add an extra opt in the end to trigger the last operation.
-    for c in s+'+':
+    for i, c in enumerate(s):
         if c.isdigit():
             cur = cur * 10 + int(c)
-        elif c != ' ' and c != '(' and c != ')':
+        # make sure the last operation is performed.
+        if c != ' ' or i == len(s) - 1:
             if opt in ['+', '-']:
                 sign = 1 if opt == '+' else -1
                 stack.append(cur * sign)
@@ -28,7 +29,12 @@ def helper(s):
 
 def helper_2(s):
     """
-    s is the reserved.
+    There are a few tricks in here:
+
+    1. Don't forget the last operation. (when len(s) == 0 and come across
+     ')'). This is why we are using if instead of elif.
+    2. Since we are using recursive call here, we need to modify
+    the original list, otherwise we cannot keep track of where we are.
     """
     opt = '+'
     stack = []
@@ -37,11 +43,9 @@ def helper_2(s):
         c = s.pop()
         if c.isdigit():
             cur = cur * 10 + int(c)
-        elif c == '(':
+        if c == '(':
             cur = helper_2(s)
-        elif c == ')':
-            break
-        elif c != ' ':
+        if c in ['+', '-', '*', '/', ')'] or len(s) == 0:
             if opt in ['+', '-']:
                 sign = 1 if opt == '+' else -1
                 stack.append(sign * cur)
@@ -49,6 +53,10 @@ def helper_2(s):
                 stack[-1] = stack[-1] * cur
             elif opt == '/':
                 stack[-1] = int(stack[-1] / cur)
+            opt = c
+            cur = 0
+        if c == ')':
+            break
     return sum(stack)
 
 

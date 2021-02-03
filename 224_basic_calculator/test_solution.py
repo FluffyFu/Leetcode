@@ -29,3 +29,16 @@ def test_cal():
     s = '1-2*3/4'
     res = cal(s)
     assert res == 0
+
+    s = '1 * (1-2)'
+    res = cal(s)
+    assert res == -1
+
+    s = "(1+(5+2))"
+    res = cal(s)
+    assert res == 8
+
+    s = "(1+(4+5+2)-3)+(6+8)"
+    res = cal(s)
+    assert res == 23
+
